@@ -23,19 +23,20 @@
       margin-top: 20px;
       padding: 10px 20px;
       font-size: 16px;
-      background-color: #1a1a1a; // set the background color
-      color: white; // set the text color
+      background-color: #1a1a1a;
+      color: white;
       border: 1px solid #1a1a1a;
       border-radius: 4px;
       cursor: pointer;
     }
   
     button:hover {
-      border: 1px solid #007bff; // set a different border color for hover state
+      border: 1px solid #007bff;
     }
   
     .wheel {
       position: relative;
+
       .spin-button {
         position: absolute;
         top: 47%;
@@ -44,11 +45,8 @@
         z-index: 10;
         width: 100%;
         padding: 30px;
-      
         background: rgba(0, 0, 0, 0.2);
         backdrop-filter: blur(10px);
-      
-        // Optional: add some styling to make the button visible
         border: none;
         color: #fff;
         font-size: 24px;
@@ -90,8 +88,8 @@
       margin-top: 20px;
       padding: 10px 20px;
       font-size: 16px;
-      background-color: #1a1a1a; // set the background color
-      color: white; // set the text color
+      background-color: #1a1a1a;
+      color: white;
       border: 1px solid #1a1a1a;
       border-radius: 6px;
       cursor: pointer;
@@ -107,4 +105,3 @@
     background-color: rgba(0, 0, 0, 0.75);
     z-index: 999;
   }
-  

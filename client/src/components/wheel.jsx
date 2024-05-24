@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { Wheel } from 'react-custom-roulette';
 import Modal from 'react-modal';
-import './wheel.scss';  // Import the SCSS file
+import './wheel.scss';
 
-Modal.setAppElement('#root'); // To handle accessibility for the modal
+Modal.setAppElement('#root');
 
 const defaultOptions = [
   { option: 'Default 1' },
@@ -32,7 +32,7 @@ const WheelComponent = () => {
     const newPrizeNumber = Math.floor(Math.random() * options.length);
     setPrizeNumber(newPrizeNumber);
     setMustSpin(true);
-    setButtonVisible(false);  // Hide the button after clicking
+    setButtonVisible(false);
   };
 
   const handleCloseModal = () => {
@@ -59,16 +59,16 @@ const WheelComponent = () => {
           onStopSpinning={() => {
             setMustSpin(false);
             setIsModalOpen(true);
-            setButtonVisible(true); // Show the button after spinning stops
+            setButtonVisible(true);
           }}
           backgroundColors={['#1a1a1a', '#ffffff']}
           textColors={['#FF0000']}
           outerBorderColor={'#000000'}
           outerBorderWidth={4}
           innerBorderColor={'#000000'}
-          innerBorderWidth={options.length > 1 ? 4 : 0}  // Hide inner border if there's only 1 option
+          innerBorderWidth={options.length > 1 ? 4 : 0}
           radiusLineColor={'#000000'}
-          radiusLineWidth={options.length > 1 ? 4 : 0}  // Hide radius line if there's only 1 option
+          radiusLineWidth={options.length > 1 ? 4 : 0}
           fontSize={16}
           perpendicularText={true}
           height={300}
