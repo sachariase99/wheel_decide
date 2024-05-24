@@ -1,62 +1,92 @@
 import React, { useState } from 'react';
 import { Wheel } from 'react-custom-roulette';
 import Modal from 'react-modal';
-import './wheel.scss';
+import './wheel.scss';  // Import the SCSS file
 
 Modal.setAppElement('#root'); // To handle accessibility for the modal
 
-const data = [
-  { option: 'Option 1' },
-  { option: 'Option 2' },
-  { option: 'Option 3' },
-  { option: 'Option 4' },
-  { option: 'Option 5' },
-  { option: 'Option 6' },
-  { option: 'Option 7' },
-  { option: 'Option 8' },
-  { option: 'Option 9' },
-  { option: 'Option 10' }
+const defaultOptions = [
+  { option: 'Default 1' },
+  { option: 'Default 2' },
+  { option: 'Default 3' },
+  { option: 'Default 4' },
+  { option: 'Default 5' },
+  { option: 'Default 6' },
+  { option: 'Default 7' },
+  { option: 'Default 8' }
 ];
 
 const WheelComponent = () => {
   const [mustSpin, setMustSpin] = useState(false);
   const [prizeNumber, setPrizeNumber] = useState(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [options, setOptions] = useState(defaultOptions);
+  const [newOption, setNewOption] = useState("");
+  const [buttonVisible, setButtonVisible] = useState(true);
 
   const handleSpinClick = () => {
-    const newPrizeNumber = Math.floor(Math.random() * data.length);
+    if (options.length === 0) {
+      alert("Please add some options before spinning the wheel.");
+      return;
+    }
+    const newPrizeNumber = Math.floor(Math.random() * options.length);
     setPrizeNumber(newPrizeNumber);
     setMustSpin(true);
+    setButtonVisible(false);  // Hide the button after clicking
   };
 
   const handleCloseModal = () => {
     setIsModalOpen(false);
   };
 
+  const handleAddOption = () => {
+    if (newOption.trim() === "") {
+      alert("Option cannot be empty.");
+      return;
+    }
+    const updatedOptions = options.filter(option => !defaultOptions.includes(option));
+    setOptions([...updatedOptions, { option: newOption }]);
+    setNewOption("");
+  };
+
   return (
     <div className="wheel-container">
-      <Wheel
-        mustStartSpinning={mustSpin}
-        prizeNumber={prizeNumber}
-        data={data}
-        onStopSpinning={() => {
-          setMustSpin(false);
-          setIsModalOpen(true);
-        }}
-        backgroundColors={['#000000', '#ffffff']}
-        textColors={['#FF0000']}
-        outerBorderColor={'#000000'}
-        outerBorderWidth={4}
-        innerBorderColor={'#000000'}
-        innerBorderWidth={4}
-        radiusLineColor={'#000000'}
-        radiusLineWidth={4}
-        fontSize={16}
-        perpendicularText={true}
-        height={300}
-        width={300}
-      />
-      <button onClick={handleSpinClick}>Spin</button>
+      <div className='wheel'>
+        <Wheel
+          mustStartSpinning={mustSpin}
+          prizeNumber={prizeNumber}
+          data={options}
+          onStopSpinning={() => {
+            setMustSpin(false);
+            setIsModalOpen(true);
+            setButtonVisible(true); // Show the button after spinning stops
+          }}
+          backgroundColors={['#1a1a1a', '#ffffff']}
+          textColors={['#FF0000']}
+          outerBorderColor={'#000000'}
+          outerBorderWidth={4}
+          innerBorderColor={'#000000'}
+          innerBorderWidth={options.length > 1 ? 4 : 0}  // Hide inner border if there's only 1 option
+          radiusLineColor={'#000000'}
+          radiusLineWidth={options.length > 1 ? 4 : 0}  // Hide radius line if there's only 1 option
+          fontSize={16}
+          perpendicularText={true}
+          height={300}
+          width={300}
+        />
+        {buttonVisible && (
+          <button className='spin-button' onClick={handleSpinClick}>Spin</button>
+        )}
+      </div>
+      <div className="inputs">
+        <input
+          type="text"
+          value={newOption}
+          onChange={(e) => setNewOption(e.target.value)}
+          placeholder="Add a new option"
+        />
+        <button onClick={handleAddOption}>Add Option</button>
+      </div>
       <Modal
         isOpen={isModalOpen}
         onRequestClose={handleCloseModal}
@@ -64,7 +94,7 @@ const WheelComponent = () => {
         className="Modal"
         overlayClassName="Overlay"
       >
-        <h2>{data[prizeNumber].option} won</h2>
+        <h2>{options[prizeNumber]?.option}</h2>
         <button onClick={handleCloseModal}>Close</button>
       </Modal>
     </div>
